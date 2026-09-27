@@ -129,6 +129,7 @@ export const updateContentDataSchema = z
     preview_image: namedFilePayloadSchema.nullable().optional(),
     relatedItems: z.array(RelatedItemPayloadSchema).optional(),
     rights: z.string().nullable().optional(),
+    subjects: z.array(z.string()).optional(),
     table_of_contents: z.boolean().nullable().optional(),
     title: z.string().optional(),
     versioning_enabled: z.boolean().optional(),
