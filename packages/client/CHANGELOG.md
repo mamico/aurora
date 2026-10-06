@@ -8,6 +8,20 @@
 
 <!-- towncrier release notes start -->
 
+## 2.0.0-alpha.8 (2026-10-03)
+
+### Internal
+
+- The `release` scripts now take the GitHub token from `gh auth token` when `GITHUB_TOKEN` is not set, and run `towncrier` with `uvx` instead of `pipx`. @sneridagh 
+
+## 2.0.0-alpha.7 (2026-09-29)
+
+### Feature
+
+- Added the optional `inherit` field to the `updateSharing` data schema. @jmevissen [#29](https://github.com/plone/aurora/pull/29)
+- Added an optional `transition` argument to `createWorkflow` so any workflow transition can be triggered, not only `publish`. @nils-pzr 
+- Allowed `updateContent` to set the `subjects` (tags) field. @nils-pzr 
+
 ## 2.0.0-alpha.6 (2026-09-21)
 
 ### Internal

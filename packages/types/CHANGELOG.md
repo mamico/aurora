@@ -8,6 +8,18 @@
 
 <!-- towncrier release notes start -->
 
+## 3.0.0-alpha.7 (2026-10-03)
+
+### Internal
+
+- The `release` scripts now take the GitHub token from `gh auth token` when `GITHUB_TOKEN` is not set, and run `towncrier` with `uvx` instead of `pipx`. @sneridagh 
+
+## 3.0.0-alpha.6 (2026-09-29)
+
+### Bugfix
+
+- Fixed the `SharingResponse` type: `entries` is an array, and role values can be the read-only sentinels `'global'` and `'acquired'` besides `boolean`. @jmevissen [#29](https://github.com/plone/aurora/issues/29)
+
 ## 3.0.0-alpha.5 (2026-09-21)
 
 ### Internal

@@ -8,6 +8,30 @@
 
 <!-- towncrier release notes start -->
 
+## 1.0.0-alpha.14 (2026-10-06)
+
+### Feature
+
+- Moved the block model's spatial relationships (category widths, spacing between blocks, nested blocks) from `styles/content-area.css` to `styles/content.css`, which the app loads in both the Public UI and the CMSUI editor. Blocks are now spaced the same in the editor as in the public view. @sneridagh 
+
+## 1.0.0-alpha.13 (2026-10-03)
+
+### Internal
+
+- Import icons from `@plone/icons`. Import Quanta components from `@plone/quanta`. @pnicolli 
+- The `release` scripts now take the GitHub token from `gh auth token` when `GITHUB_TOKEN` is not set, and run `towncrier` with `uvx` instead of `pipx`. @sneridagh 
+
+## 1.0.0-alpha.12 (2026-09-29)
+
+### Feature
+
+- Added search widget and header sub-slots. @arybakov05 [#59](https://github.com/plone/aurora/issues/59)
+- Added News Item content type view @thet [#6709](https://github.com/plone/aurora/issues/6709)
+
+### Bugfix
+
+- Fixed nested blocks, like paragraphs in a blockquote, table cell or column, being narrowed and centered in the public view instead of filling their container. @sneridagh 
+
 ## 1.0.0-alpha.11 (2026-09-21)
 
 ### Internal

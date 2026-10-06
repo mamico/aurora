@@ -32,33 +32,7 @@ export function useUploadFile({
     setProgress(10);
 
     try {
-      const contentPath = getCurrentContentPath();
-      const endpoint =
-        contentPath === '/'
-          ? '/@createContent'
-          : `/@createContent${contentPath}`;
-
-      setProgress(40);
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        credentials: 'include',
-        body: buildCreateContentFormData(file),
-      });
-
-      if (!response.ok) {
-        const errorPayload = await parseJsonSafe(response);
-        throw new Error(
-          getServerErrorMessage(errorPayload) ??
-            `Upload failed with status ${response.status}`,
-        );
-      }
-
-      const createdItem = await response.json();
-
-      setProgress(90);
-
-      const uploaded = createUploadedFile(file, createdItem);
+      const uploaded = await uploadFileToPlone(file, setProgress);
 
       setUploadedFile(uploaded);
       onUploadComplete?.(uploaded);
@@ -66,12 +40,7 @@ export function useUploadFile({
 
       return uploaded;
     } catch (error) {
-      const errorMessage = getErrorMessage(error);
-      toast.error(
-        errorMessage.length > 0
-          ? errorMessage
-          : 'Something went wrong, please try again later.',
-      );
+      showErrorToast(error);
 
       onUploadError?.(error);
       return undefined;
@@ -89,6 +58,41 @@ export function useUploadFile({
     uploadFile: uploadToPlone,
     uploadingFile,
   };
+}
+
+/**
+ * Creates an Image (or File) content item from `file` in the content being
+ * edited, and returns its URLs. Throws when the upload fails.
+ */
+export async function uploadFileToPlone(
+  file: File,
+  onProgress?: (progress: number) => void,
+): Promise<UploadedFile> {
+  const contentPath = getCurrentContentPath();
+  const endpoint =
+    contentPath === '/' ? '/@createContent' : `/@createContent${contentPath}`;
+
+  onProgress?.(40);
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    credentials: 'include',
+    body: buildCreateContentFormData(file),
+  });
+
+  if (!response.ok) {
+    const errorPayload = await parseJsonSafe(response);
+    throw new Error(
+      getServerErrorMessage(errorPayload) ??
+        `Upload failed with status ${response.status}`,
+    );
+  }
+
+  const createdItem = await response.json();
+
+  onProgress?.(90);
+
+  return createUploadedFile(file, createdItem);
 }
 
 // The file is sent as a multipart/form-data part named after its field,
@@ -128,7 +132,7 @@ function createUploadedFile(
   };
 }
 
-function isImageFile(file: File) {
+export function isImageFile(file: File) {
   if (file.type?.startsWith('image/')) return true;
 
   const lowerName = file.name.toLowerCase();
@@ -193,5 +197,9 @@ export function getErrorMessage(err: unknown) {
 export function showErrorToast(err: unknown) {
   const errorMessage = getErrorMessage(err);
 
-  return toast.error(errorMessage);
+  return toast.error(
+    errorMessage.length > 0
+      ? errorMessage
+      : 'Something went wrong, please try again later.',
+  );
 }

@@ -113,6 +113,13 @@ export default function install(config: ConfigType) {
         widths: ['narrow'],
       },
     },
+    h1: {
+      category: 'text',
+      blockWidth: {
+        defaultWidth: 'narrow',
+        widths: ['narrow'],
+      },
+    },
     h2: {
       category: 'text',
       blockWidth: {
@@ -134,17 +141,25 @@ export default function install(config: ConfigType) {
         widths: ['narrow'],
       },
     },
-    h1: {
-      category: 'text',
-    },
     h5: {
       category: 'text',
+      blockWidth: {
+        defaultWidth: 'narrow',
+        widths: ['narrow'],
+      },
     },
     h6: {
       category: 'text',
+      blockWidth: {
+        defaultWidth: 'narrow',
+        widths: ['narrow'],
+      },
     },
     blockquote: {
       category: 'text',
+    },
+    hr: {
+      category: 'separator',
     },
     code_block: {
       category: 'text',
@@ -177,21 +192,6 @@ export default function install(config: ConfigType) {
     },
     column: {
       category: 'layout',
-    },
-    img: {
-      category: 'media',
-    },
-    video: {
-      category: 'media',
-    },
-    audio: {
-      category: 'media',
-    },
-    file: {
-      category: 'media',
-    },
-    media_embed: {
-      category: 'media',
     },
   };
 
